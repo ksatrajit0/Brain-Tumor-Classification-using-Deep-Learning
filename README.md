@@ -26,6 +26,7 @@ Brain Tumor Classification from Mutlisequence MRI (T1, T1C and T2) and Mutlimoda
 - [Training](https://github.com/ksatrajit0/Brain-Tumor-Classification-using-Deep-Learning/blob/main/training.py)
 - [Evaluation](https://github.com/ksatrajit0/Brain-Tumor-Classification-using-Deep-Learning/blob/main/evaluation.py)
 - [Grad-CAM Analysis](https://github.com/ksatrajit0/Brain-Tumor-Classification-using-Deep-Learning/blob/main/grad_cam_analysis.py)
+- [Final Jupyter Notebook Version](https://github.com/ksatrajit0/Brain-Tumor-Classification-using-Deep-Learning/blob/main/brat-classfcn-mri-mutli-seqfusn-attention.ipynb)
 
 ### Importance of Project:
 - The promising results achieved underscore the potential of our framework’s robust nature and generalization capabilities across various modalities.

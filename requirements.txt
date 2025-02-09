@@ -1,0 +1,10 @@
+imutils
+numpy
+tqdm
+opencv-python
+pillow
+pandas
+seaborn
+matplotlib
+scikit-learn
+tensorflow

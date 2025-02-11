@@ -18,6 +18,8 @@ Brain Tumor Classification from Mutlisequence MRI (T1, T1C and T2) and Mutlimoda
 > Workflow Used:
 
 ![Workflow of the proposed framework for brain tumor classification](https://github.com/user-attachments/assets/d889103d-72c8-43f6-ad19-196e4015311a)
+
+> Classification Task [15 Class, 6 Class, 2 class]
 ![Classification Task](https://github.com/user-attachments/assets/b15931ac-f4c8-4ce4-b1ab-3a64d3134719)
 
 ## Installation
@@ -34,6 +36,7 @@ pip install -r requirements.txt
 - [Model Architecture](https://github.com/ksatrajit0/Brain-Tumor-Classification-using-Deep-Learning/blob/main/model.py)
 - [Training](https://github.com/ksatrajit0/Brain-Tumor-Classification-using-Deep-Learning/blob/main/training.py)
 - [Evaluation](https://github.com/ksatrajit0/Brain-Tumor-Classification-using-Deep-Learning/blob/main/evaluation.py)
+- [K-Fold Cross Validation](https://github.com/ksatrajit0/Brain-Tumor-Classification-using-Deep-Learning/blob/main/cross_validation.py)
 - [Grad-CAM Analysis](https://github.com/ksatrajit0/Brain-Tumor-Classification-using-Deep-Learning/blob/main/grad_cam_analysis.py)
 
 ### Importance of Project:

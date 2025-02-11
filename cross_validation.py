@@ -20,7 +20,6 @@ import itertools
 
 print('Modules loaded successfully.')
 
-# Data preparation
 data_dir = "/kaggle/working/cleaned"
 paths = []
 labels = []
@@ -33,37 +32,30 @@ for fold in folds:
         paths.append(each_pic_path)
         labels.append(fold.split(' ')[0])
 
-# Create DataFrame
 pseries = pd.Series(paths, name='Picture Path')
 lseries = pd.Series(labels, name='Label')
 df = pd.concat([pseries, lseries], axis=1)
 
-# Image generator
 batch_size = 16
 img_size = (224, 224)
 gen = ImageDataGenerator()
 
-# Initialize variables to store results
 val_accuracies = []
 best_histories = []
 best_val_index = None
 best_val_score = 0
 
-# Set up KFold cross-validation
 kf = KFold(n_splits=5, shuffle=True, random_state=42)
 
-# Start KFold Cross-validation
 for train_index, val_index in kf.split(df):
     train_df, val_df = df.iloc[train_index], df.iloc[val_index]
 
-    # Create generators for train and validation
     train_gen = gen.flow_from_dataframe(train_df, x_col='Picture Path', y_col='Label', target_size=img_size, 
                                        class_mode='categorical', color_mode='rgb', shuffle=True, batch_size=batch_size)
 
     valid_gen = gen.flow_from_dataframe(val_df, x_col='Picture Path', y_col='Label', target_size=img_size, 
                                        class_mode='categorical', color_mode='rgb', shuffle=True, batch_size=batch_size)
 
-    # Define the model
     def create_model(input_shape, num_classes=15, learning_rate=0.0001):
         inputs = Input(shape=input_shape, name="Input_Layer")
         
@@ -97,38 +89,31 @@ for train_index, val_index in kf.split(df):
     input_shape = (224, 224, 3)
     model = create_model(input_shape, num_classes=15, learning_rate=0.0001)
 
-    # Early stopping callback
     early_stopping = EarlyStopping(monitor='val_loss', patience=5, restore_best_weights=True)
 
-    # Train the model
     hist = model.fit(train_gen, epochs=50, callbacks=[early_stopping],
                      validation_data=valid_gen, verbose=1, shuffle=False)
 
-    # Evaluate model
     val_score = model.evaluate(valid_gen)
 
-    val_accuracies.append(val_score[1])  # validation accuracy
+    val_accuracies.append(val_score[1])
     
     if val_score[1] > best_val_score:
         best_val_index = val_index
         best_val_score = val_score[1]
         best_histories.append(hist.history)
 
-# Get the best validation set
 best_valid_df = df.iloc[best_val_index]
 
-# Create the validation generator for the best validation set
 best_valid_gen = gen.flow_from_dataframe(best_valid_df, x_col='Picture Path', y_col='Label', target_size=img_size, 
                                          class_mode='categorical', color_mode='rgb', shuffle=False, batch_size=batch_size)
 
-# Predictions and Confusion Matrix for the best validation set
 preds = model.predict(best_valid_gen)
 y_pred = np.argmax(preds, axis=1)
 
 g_dict = best_valid_gen.class_indices
 classes = list(g_dict.keys())
 
-# Confusion matrix
 cm = confusion_matrix(best_valid_gen.classes, y_pred)
 
 plt.figure(figsize=(15, 15))
@@ -149,6 +134,5 @@ plt.ylabel('True Label')
 plt.xlabel('Predicted Label')
 plt.show()
 
-# Classification report
 print("Classification Report for the Best Validation Set")
 print(classification_report(best_valid_gen.classes, y_pred, target_names=classes))
